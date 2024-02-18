@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 const PokemonContext = createContext();
 export const usePokemon = () => useContext(PokemonContext);
 
-// provider funktion
+// provider function
 export const PokemonProvider = ({ children }) => {
   // states
   const [pokemon, setPokemon] = useState([]);

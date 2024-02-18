@@ -20,72 +20,73 @@ const PokemonCard = () => {
   return (
     <>
       <div className="APP">
-        <div className="CONTROLS w-full flex flex-row gap-2 place-content-center text-white text-lg">
+        <div className="CONTROLS w-full flex flex-row gap-2 place-content-center text-white text-lg mb-8">
           <button
             onClick={shufflePokemon}
-            className="bg-red-500 p-2 rounded-md"
+            className="bg-red-500 p-2 rounded-md shadow-xl"
           >
             Shuffle Cards
           </button>
-          <Link to="/">
-            <button className="bg-red-500 p-2 rounded-md">Back To Meny</button>
-          </Link>
           <Link to={"/arena"}>
-            <button className="bg-red-500 p-2 rounded-md">Go To Arena</button>
+            <button className="bg-red-500 p-2 rounded-md shadow-xl">
+              Go To Arena
+            </button>
+          </Link>
+          <Link to="/">
+            <button className="bg-red-500 p-2 rounded-md shadow-xl">
+              Back To Meny
+            </button>
           </Link>
         </div>
         <div className="CARDS grid grid-cols-4 gap-5 p-2">
           {pokemon.map((pokemon, index) => (
             <div
               key={index}
-              className={`flex flex-col place-items-center p-2 border border-black rounded-sm
+              className={`flex flex-col place-items-center my-3 relative p-2 border border-black rounded-sm hover:scale-110 hover:shadow-2xl
             ${getTypeColor(pokemon.types)}
             ${activePokemon === index ? "z-10 scale-110 shadow-lg" : ""}`}
               onClick={() => handleCardClick(index)}
               style={{ transition: "transform 0.3s ease" }}
             >
               <div className="flex flex-row justify-evenly w-full place-items-center">
-                <h2 className="text-2xl">{pokemon.name.toUpperCase()}</h2>
+                <h2 className="text-xl font-bold">
+                  {pokemon.name.toUpperCase()}
+                </h2>
                 <img
                   className="w-11"
                   src={getTypeIcon(pokemon.types)}
                   alt={pokemon.types[0].type.name}
                 />
               </div>
-
               <img
                 src={pokemon.sprites.front_default}
                 alt={pokemon.name}
                 className="w-full"
               />
-              <p>
-                Abilities:{" "}
-                {pokemon.abilities
-                  .map((ability) => ability.ability.name)
-                  .join(", ")}
-              </p>
-              <p>Weight: {pokemon.weight / 10} kg</p>
-              <p>Height: {pokemon.height / 10} m</p>
-              <div className="statsDiv">
-                <h2>Stats</h2>
-                <ul>
-                  <li>
-                    {pokemon.stats[0].stat.name} - {pokemon.stats[0].base_stat}
-                  </li>
-                  <li>
-                    {pokemon.stats[1].stat.name} - {pokemon.stats[1].base_stat}
-                  </li>
-                  <li>
-                    {pokemon.stats[2].stat.name} - {pokemon.stats[2].base_stat}
-                  </li>
-                </ul>
+              <div className="statsDiv grid grid-cols-3 w-full place-items-center text-lg -mt-2 font-bold">
+                <div>{pokemon.stats[2].stat.name}</div>
+                <div>{pokemon.stats[1].stat.name}</div>
+                <div>{pokemon.stats[0].stat.name}</div>
+                <div>{pokemon.stats[2].base_stat}</div>
+                <div>{pokemon.stats[1].base_stat}</div>
+                <div>{pokemon.stats[0].base_stat}</div>
               </div>
-              <button
-                onClick={() => addToDeck(pokemon)}
-                className="bg-blue-400 p-2"
-              >
-                Choose
-              </button>
+              <div className="flex flex-col place-items-center w-full font-bold">
+                <h2>Abilities: </h2>
+                {pokemon.abilities.map((ability) => (
+                  <div className="font-bold">{ability.ability.name}</div>
+                ))}
+              </div>
+              <p className="font-bold">Weight: {pokemon.weight / 10} kg</p>
+              <p className="font-bold">Height: {pokemon.height / 10} m</p>
+              <div className="mt-9">
+                <button
+                  onClick={() => addToDeck(pokemon)}
+                  className="bg-blue-400 p-2 absolute bottom-0 right-0 left-0 mt-20 text-xl"
+                >
+                  Choose
+                </button>
+              </div>
             </div>
           ))}
         </div>
