@@ -1,12 +1,15 @@
-import PokemonCard from "./PokemonCard";
+import { Route, Routes } from "react-router-dom";
+import MainComponent from "./Components/MainComponent"
+import WelcomeScreen from "./Components/WelcomeScreen";
 
 
 
 function App() {
   return (
-    <div className="App">
-      <PokemonCard />
-    </div>
+    <Routes>
+      <Route path="/" element={<WelcomeScreen />} />
+      <Route path="/main" element={<MainComponent />} />
+    </Routes>
   );
 }
 

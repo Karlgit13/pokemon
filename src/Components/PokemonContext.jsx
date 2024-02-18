@@ -12,6 +12,16 @@ export const usePokemon = () => useContext(PokemonContext);
 export const PokemonProvider = ({ children }) => {
   // state för lagra pokemons i array
   const [pokemon, setPokemon] = useState([]);
+  // state lagra uhm deck över komponenter
+  const [pokeDeck, setPokeDeck] = useState([]);
+
+  const addToDeck = (pokemon) => {
+    setPokeDeck((currentDeck) => {
+      return currentDeck.find((poke) => poke.id === pokemon.id)
+        ? currentDeck
+        : [...currentDeck, pokemon];
+    });
+  };
 
   // shuffle funktion
   const shuffleArray = (array) => {
@@ -49,30 +59,30 @@ export const PokemonProvider = ({ children }) => {
   };
 
   const typeToPng = {
-    normal: require("./assets/normal.png"),
-    fire: require("./assets/fire.png"),
-    water: require("./assets/water.png"),
-    electric: require("./assets/electric.png"),
-    grass: require("./assets/grass.png"),
-    ice: require("./assets/ice.png"),
-    fighting: require("./assets/fighting.png"),
-    poison: require("./assets/poison.png"),
-    ground: require("./assets/ground.png"),
-    flying: require("./assets/flying.png"),
-    psychic: require("./assets/psychic.png"),
-    bug: require("./assets/bug.png"),
-    rock: require("./assets/rock.png"),
-    ghost: require("./assets/ghost.png"),
-    dragon: require("./assets/dragon.png"),
-    dark: require("./assets/dark.png"),
-    steel: require("./assets/steel.png"),
-    fairy: require("./assets/fairy.png"),
+    normal: require("../assets/normal.png"),
+    fire: require("../assets/fire.png"),
+    water: require("../assets/water.png"),
+    electric: require("../assets/electric.png"),
+    grass: require("../assets/grass.png"),
+    ice: require("../assets/ice.png"),
+    fighting: require("../assets/fighting.png"),
+    poison: require("../assets/poison.png"),
+    ground: require("../assets/ground.png"),
+    flying: require("../assets/flying.png"),
+    psychic: require("../assets/psychic.png"),
+    bug: require("../assets/bug.png"),
+    rock: require("../assets/rock.png"),
+    ghost: require("../assets/ghost.png"),
+    dragon: require("../assets/dragon.png"),
+    dark: require("../assets/dark.png"),
+    steel: require("../assets/steel.png"),
+    fairy: require("../assets/fairy.png"),
   };
 
   // hämta pokemon med api
   useEffect(() => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=10")
+      .get("https://pokeapi.co/api/v2/pokemon?limit=4")
       .then((response) => {
         // hämta detaljer för varje pokemon
         return Promise.all(
@@ -91,7 +101,16 @@ export const PokemonProvider = ({ children }) => {
   }, []);
 
   return (
-    <PokemonContext.Provider value={{ pokemon, typeToColor, typeToPng, shufflePokemon }}>
+    <PokemonContext.Provider
+      value={{
+        pokemon,
+        typeToColor,
+        typeToPng,
+        shufflePokemon,
+        pokeDeck,
+        addToDeck,
+      }}
+    >
       {children}
     </PokemonContext.Provider>
   );
