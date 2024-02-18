@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePokemon } from "./PokemonContext";
+import { Link } from "react-router-dom";
 
 const PokemonCard = () => {
   const { pokemon, typeToColor, typeToPng, addToDeck, shufflePokemon } =
@@ -27,10 +28,12 @@ const PokemonCard = () => {
   return (
     <>
       <div className="APP">
-        <div className="CONTROLS">
-          <button onClick={shufflePokemon} className="bg-gray-500 p-2">
+        <div className="CONTROLS w-full flex flex-row gap-2 place-content-center text-white text-lg">
+          <button onClick={shufflePokemon} className="bg-red-500 p-2 rounded-md">
             Shuffle Cards
           </button>
+          <Link to="/"><button className="bg-red-500 p-2 rounded-md">Back To Meny</button></Link>
+          <button className="bg-red-500 p-2 rounded-md">Go To Arena</button>
         </div>
         <div className="CARDS grid grid-cols-4 gap-5 p-2">
           {pokemon.map((pokemon, index) => (
@@ -86,6 +89,9 @@ const PokemonCard = () => {
               </button>
             </div>
           ))}
+        </div>
+        <div>
+         
         </div>
       </div>
     </>
