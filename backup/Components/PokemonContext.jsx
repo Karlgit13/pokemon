@@ -1,19 +1,24 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
-// create and use Context
+// skapar pokemon context
 const PokemonContext = createContext();
+
+// exporterar pokemon contexten som usePokemon för att hämta den från
+// andra komponenter enkelt med const { pokemon } = usePokemon();
 export const usePokemon = () => useContext(PokemonContext);
 
 // provider funktion
 export const PokemonProvider = ({ children }) => {
-  // states
+  // state för lagra pokemons i array
   const [pokemon, setPokemon] = useState([]);
+  // state lagra uhm deck över komponenter
   const [pokeDeck, setPokeDeck] = useState([]);
+  // state bot deck
   const [botDeck, setBotDeck] = useState([]);
+
   const [activePokemon, setActivePokemon] = useState(null);
 
-  // functions
   const handleCardClick = (index) => {
     setActivePokemon(index === activePokemon ? null : index);
   };
@@ -28,6 +33,7 @@ export const PokemonProvider = ({ children }) => {
     return typeToPng[icon] || null;
   };
 
+  // lagra pokemon i state
   const addToDeck = (pokemon) => {
     setPokeDeck((currentDeck) => {
       return currentDeck.find((poke) => poke.id === pokemon.id)
@@ -36,6 +42,19 @@ export const PokemonProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    const createBotDeck = () => {
+      const shuffledPokemon = shuffleArray([...pokemon]);
+      const selectedForBot = shuffledPokemon.slice(0, 5);
+      setBotDeck(selectedForBot);
+    };
+
+    if (pokemon.length > 0) {
+      createBotDeck();
+    }
+  }, [pokemon]);
+
+  // shuffle funktion
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -48,7 +67,7 @@ export const PokemonProvider = ({ children }) => {
     setPokemon((prevPokemon) => [...shuffleArray(prevPokemon)]);
   };
 
-  // objects
+  // objekt med färger för bakgrund beroende vilken typ
   const typeToColor = {
     normal: "bg-gray-300",
     fire: "bg-red-300",
@@ -91,10 +110,10 @@ export const PokemonProvider = ({ children }) => {
     fairy: require("../assets/fairy.png"),
   };
 
-  // effects
+  // hämta pokemon med api
   useEffect(() => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=24")
+      .get("https://pokeapi.co/api/v2/pokemon?limit=50")
       .then((response) => {
         // hämta detaljer för varje pokemon
         return Promise.all(
@@ -111,18 +130,6 @@ export const PokemonProvider = ({ children }) => {
       })
       .catch((error) => console.error(("error: ", error)));
   }, []);
-
-  useEffect(() => {
-    const createBotDeck = () => {
-      const shuffledPokemon = shuffleArray([...pokemon]);
-      const selectedForBot = shuffledPokemon.slice(0, 5);
-      setBotDeck(selectedForBot);
-    };
-
-    if (pokemon.length > 0) {
-      createBotDeck();
-    }
-  }, [pokemon]);
 
   return (
     <PokemonContext.Provider
