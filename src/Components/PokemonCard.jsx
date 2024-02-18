@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 const PokemonCard = () => {
   const {
     pokemon,
-    typeToColor,
-    typeToPng,
     addToDeck,
     shufflePokemon,
     activePokemon,
