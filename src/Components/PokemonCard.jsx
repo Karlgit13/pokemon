@@ -73,8 +73,10 @@ const PokemonCard = () => {
               </div>
               <div className="flex flex-col place-items-center w-full font-bold">
                 <h2>Abilities: </h2>
-                {pokemon.abilities.map((ability) => (
-                  <div className="font-bold">{ability.ability.name}</div>
+                {pokemon.abilities.map((ability, index) => (
+                  <div key={index} className="font-bold">
+                    {ability.ability.name}
+                  </div>
                 ))}
               </div>
               <p className="font-bold">Weight: {pokemon.weight / 10} kg</p>

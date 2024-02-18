@@ -14,7 +14,7 @@ const Arena = () => {
       </div>
       <div className="COMPUTER-DECK">
         {botDeck.map((pokemon) => (
-          <div>
+          <div key={pokemon.id}>
             <h1>{pokemon.name}</h1>
           </div>
         ))}
