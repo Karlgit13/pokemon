@@ -13,6 +13,19 @@ export const PokemonProvider = ({ children }) => {
   // state för lagra pokemons i array
   const [pokemon, setPokemon] = useState([]);
 
+  // shuffle funktion
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; // ES6 destructuring swap
+    }
+    return array;
+  };
+
+  const shufflePokemon = () => {
+    setPokemon((prevPokemon) => [...shuffleArray(prevPokemon)]);
+  };
+
   // objekt med färger för bakgrund beroende vilken typ
   const typeToColor = {
     normal: "bg-gray-300",
@@ -54,12 +67,12 @@ export const PokemonProvider = ({ children }) => {
     dark: require("./assets/dark.png"),
     steel: require("./assets/steel.png"),
     fairy: require("./assets/fairy.png"),
-  }
+  };
 
   // hämta pokemon med api
   useEffect(() => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=100")
+      .get("https://pokeapi.co/api/v2/pokemon?limit=10")
       .then((response) => {
         // hämta detaljer för varje pokemon
         return Promise.all(
@@ -78,7 +91,7 @@ export const PokemonProvider = ({ children }) => {
   }, []);
 
   return (
-    <PokemonContext.Provider value={{ pokemon, typeToColor, typeToPng }}>
+    <PokemonContext.Provider value={{ pokemon, typeToColor, typeToPng, shufflePokemon }}>
       {children}
     </PokemonContext.Provider>
   );

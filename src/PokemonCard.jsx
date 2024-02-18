@@ -2,7 +2,7 @@ import React from "react";
 import { usePokemon } from "./PokemonContext";
 
 const PokemonCard = () => {
-  const { pokemon, typeToColor, typeToPng } = usePokemon();
+  const { pokemon, typeToColor, typeToPng, shufflePokemon } = usePokemon();
 
   const getTypeColor = (types) => {
     const primaryType = types[0].type.name;
@@ -20,22 +20,31 @@ const PokemonCard = () => {
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-4 gap-5 p-2">
+        <div>
+          <button onClick={shufflePokemon}>Shuffle</button>
+        </div>
         {pokemon.map((pokemon, index) => (
           <div
             key={index}
-            className={`flex flex-col place-items-center p-2 ${getTypeColor(
+            className={`flex flex-col place-items-center p-2 border border-black rounded-sm ${getTypeColor(
               pokemon.types
             )}`}
           >
-            <h2>{pokemon.name}</h2>
+            <div className="flex flex-row justify-evenly w-full place-items-center">
+              <h2 className="text-2xl">{pokemon.name.toUpperCase()}</h2>
+              <img
+                className="w-11"
+                src={getTypeIcon(pokemon.types)}
+                alt={pokemon.types[0].type.name}
+              />
+            </div>
+
             <img
               src={pokemon.sprites.front_default}
               alt={pokemon.name}
-              className="w-36"
+              className="w-full"
             />
-            <p>Type: {pokemon.types[0].type.name}</p>
-            <img className="w-24" src={getTypeIcon(pokemon.types)} alt="" />
             <p>
               Abilities:{" "}
               {pokemon.abilities
