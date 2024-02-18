@@ -10,7 +10,7 @@ const PokeDeck = () => {
         <h1 className="text-2xl font-bold">Your Deck</h1>
         <p>Choose 5 pokemons and head over to The Arena!</p>
       </div>
-      <div className="grid grid-cols-5 w-full p-4 place-items-center">
+      <div className="grid grid-cols-5 w-full p-4 place-items-center flex-wrap">
         {pokeDeck.map((pokemon) => (
           <div key={pokemon.id}>
             <h1>{pokemon.name}</h1>

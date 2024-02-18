@@ -42,9 +42,9 @@ const PokemonCard = () => {
           {pokemon.map((pokemon, index) => (
             <div
               key={index}
-              className={`flex flex-col place-items-center my-3 relative p-2 border border-black rounded-sm hover:scale-110 hover:shadow-2xl
+              className={`flex flex-col place-items-center my-3 relative p-2 border border-black rounded-sm hover:scale-105 hover:shadow-2xl
             ${getTypeColor(pokemon.types)}
-            ${activePokemon === index ? "z-10 scale-110 shadow-lg" : ""}`}
+            ${activePokemon === index ? "z-10 scale-105 shadow-lg" : ""}`}
               onClick={() => handleCardClick(index)}
               style={{ transition: "transform 0.3s ease" }}
             >
@@ -84,7 +84,7 @@ const PokemonCard = () => {
               <div className="mt-9">
                 <button
                   onClick={() => addToDeck(pokemon)}
-                  className="bg-blue-400 p-2 absolute bottom-0 right-0 left-0 mt-20 text-xl"
+                  className="bg-black p-2 absolute bottom-0 right-0 left-0 mt-20 text-xl text-white font-bold"
                 >
                   Choose
                 </button>
