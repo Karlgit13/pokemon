@@ -2,11 +2,16 @@ import React from "react";
 import { usePokemon } from "./PokemonContext";
 
 const PokemonCard = () => {
-  const { pokemon, typeToColor } = usePokemon();
+  const { pokemon, typeToColor, typeToPng } = usePokemon();
 
   const getTypeColor = (types) => {
     const primaryType = types[0].type.name;
     return typeToColor[primaryType] || "bg-gray-300";
+  };
+
+  const getTypeIcon = (types) => {
+    const icon = types[0].type.name;
+    return typeToPng[icon] || null;
   };
 
   if (pokemon.length === 0) {
@@ -30,6 +35,7 @@ const PokemonCard = () => {
               className="w-36"
             />
             <p>Type: {pokemon.types[0].type.name}</p>
+            <img className="w-24" src={getTypeIcon(pokemon.types)} alt="" />
             <p>
               Abilities:{" "}
               {pokemon.abilities

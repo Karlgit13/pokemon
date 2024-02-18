@@ -35,10 +35,31 @@ export const PokemonProvider = ({ children }) => {
     fairy: "bg-pink-300",
   };
 
+  const typeToPng = {
+    normal: require("./assets/normal.png"),
+    fire: require("./assets/fire.png"),
+    water: require("./assets/water.png"),
+    electric: require("./assets/electric.png"),
+    grass: require("./assets/grass.png"),
+    ice: require("./assets/ice.png"),
+    fighting: require("./assets/fighting.png"),
+    poison: require("./assets/poison.png"),
+    ground: require("./assets/ground.png"),
+    flying: require("./assets/flying.png"),
+    psychic: require("./assets/psychic.png"),
+    bug: require("./assets/bug.png"),
+    rock: require("./assets/rock.png"),
+    ghost: require("./assets/ghost.png"),
+    dragon: require("./assets/dragon.png"),
+    dark: require("./assets/dark.png"),
+    steel: require("./assets/steel.png"),
+    fairy: require("./assets/fairy.png"),
+  }
+
   // hämta pokemon med api
   useEffect(() => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=12")
+      .get("https://pokeapi.co/api/v2/pokemon?limit=100")
       .then((response) => {
         // hämta detaljer för varje pokemon
         return Promise.all(
@@ -57,7 +78,7 @@ export const PokemonProvider = ({ children }) => {
   }, []);
 
   return (
-    <PokemonContext.Provider value={{ pokemon, typeToColor }}>
+    <PokemonContext.Provider value={{ pokemon, typeToColor, typeToPng }}>
       {children}
     </PokemonContext.Provider>
   );
