@@ -97,6 +97,9 @@ const Arena = () => {
         <div className="TOTAL-STATS">
           <h1 className="font-bold text-xl text-center">BOT DECK</h1>
           <h2>BOT Deck Total Stats:</h2>
+          <p>Defense: {totalBotDeckStats.defense}</p>
+          <p>Attack: {totalBotDeckStats.attack}</p>
+          <p>HP: {totalBotDeckStats.hp}</p>
         </div>
         <div className="DECK grid grid-cols-5 gap-5 p-2">
           {botDeck.map((pokemon) => (
