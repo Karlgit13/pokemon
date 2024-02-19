@@ -19,7 +19,7 @@ const PokemonCard = () => {
 
   return (
     <>
-      <div className="APP">
+      <div className="APP w-full flex flex-col place-items-center">
         <div className="CONTROLS w-full flex flex-row gap-2 place-content-center text-white text-lg mb-8">
           <button
             onClick={shufflePokemon}
@@ -38,7 +38,7 @@ const PokemonCard = () => {
             </button>
           </Link>
         </div>
-        <div className="CARDS grid grid-cols-4 gap-5 p-2">
+        <div className="CARDS grid grid-cols-4 gap-5 p-2 max-w-7xl">
           {pokemon.map((pokemon, index) => (
             <div
               key={index}

@@ -1,18 +1,47 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { usePokemon } from "./PokemonContext";
 import { Link } from "react-router-dom";
 
 const Arena = () => {
   const { pokeDeck, botDeck, getTypeColor, getTypeIcon } = usePokemon();
 
+  // pokeDeck stats
+  const totalPokeDeckStats = useMemo(() => {
+    return pokeDeck.reduce((totals, pokemon) => {
+      pokemon.stats.forEach((stat) => {
+        totals[stat.stat.name] = (totals[stat.stat.name] || 0) + stat.base_stat;
+      });
+      return totals;
+    }, {});
+  }, [pokeDeck]);
+
+  // BOTDeck stats
+  const totalBotDeckStats = useMemo(() => {
+    return botDeck.reduce((totals, pokemon) => {
+      pokemon.stats.forEach((stat) => {
+        totals[stat.stat.name] = (totals[stat.stat.name] || 0) + stat.base_stat;
+      });
+      return totals;
+    }, {});
+  }, [botDeck]);
+
   return (
-    <div className="ARENA">
+    <div className="ARENA w-full flex flex-col place-items-left">
       <div className="CONTROLS">
         <Link to={"/main"}>
-          <button>Back To Deck</button>
+          <button className="bg-red-500 p-2 rounded-md shadow-xl">
+            Back To Deck
+          </button>
         </Link>
       </div>
-      <div className="COMPUTER-DECK">
+      <div className="YOUR-DECK max-w-7xl">
+        <div className="TOTAL-STATS">
+          <h1 className="font-bold text-xl text-center">YOUR DECK</h1>
+          <h2>Your Deck Total Stats:</h2>
+          <p>Defense: {totalPokeDeckStats.defense}</p>
+          <p>Attack: {totalPokeDeckStats.attack}</p>
+          <p>HP: {totalPokeDeckStats.hp}</p>
+        </div>
         <div className="DECK grid grid-cols-5 gap-5 p-2">
           {pokeDeck.map((pokemon) => (
             <div
@@ -21,7 +50,7 @@ const Arena = () => {
             ${getTypeColor(pokemon.types)}`}
             >
               <div className="flex flex-row justify-evenly w-full place-items-center">
-                <h2 className="text-xl font-bold">
+                <h2 className="text-lg font-bold">
                   {pokemon.name.toUpperCase()}
                 </h2>
                 <img
@@ -57,8 +86,19 @@ const Arena = () => {
           ))}
         </div>
       </div>
-      <div className="YOUR-DECK">
-      <div className="DECK grid grid-cols-5 gap-5 p-2">
+      <div className="FIGHT">
+        <div>
+          <button className="bg-red-500 p-2 rounded-md shadow-xl">
+            ATTACK
+          </button>
+        </div>
+      </div>
+      <div className="BOT-DECK max-w-7xl">
+        <div className="TOTAL-STATS">
+          <h1 className="font-bold text-xl text-center">BOT DECK</h1>
+          <h2>BOT Deck Total Stats:</h2>
+        </div>
+        <div className="DECK grid grid-cols-5 gap-5 p-2">
           {botDeck.map((pokemon) => (
             <div
               key={pokemon.id}
@@ -66,7 +106,7 @@ const Arena = () => {
             ${getTypeColor(pokemon.types)}`}
             >
               <div className="flex flex-row justify-evenly w-full place-items-center">
-                <h2 className="text-xl font-bold">
+                <h2 className="text-lg font-bold">
                   {pokemon.name.toUpperCase()}
                 </h2>
                 <img

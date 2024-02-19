@@ -29,11 +29,15 @@ export const PokemonProvider = ({ children }) => {
   };
 
   const addToDeck = (pokemon) => {
-    setPokeDeck((currentDeck) => {
-      return currentDeck.find((poke) => poke.id === pokemon.id)
-        ? currentDeck
-        : [...currentDeck, pokemon];
-    });
+    if (pokeDeck.length < 5) {
+      setPokeDeck((currentDeck) => {
+        return currentDeck.find((poke) => poke.id === pokemon.id)
+          ? currentDeck
+          : [...currentDeck, pokemon];
+      });
+    } else {
+      alert("You have already selected 5 pokemons!");
+    }
   };
 
   const shuffleArray = (array) => {
