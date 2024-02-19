@@ -1,15 +1,19 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { usePokemon } from "./PokemonContext";
 import { Link } from "react-router-dom";
+import Fight from "./Fight";
 
 const Arena = () => {
   const { pokeDeck, botDeck, getTypeColor, getTypeIcon } = usePokemon();
+  const [playerHealth, setPlayerHealth] = useState(1500);
+  const [botHealth, setBotHealth] = useState(1500);
 
   // pokeDeck stats
   const totalPokeDeckStats = useMemo(() => {
     return pokeDeck.reduce((totals, pokemon) => {
       pokemon.stats.forEach((stat) => {
-        totals[stat.stat.name] = (totals[stat.stat.name] || 0) + stat.base_stat;
+        const statName = stat.stat.name;
+        totals[statName] = (totals[statName] || 0) + stat.base_stat;
       });
       return totals;
     }, {});
@@ -34,15 +38,9 @@ const Arena = () => {
           </button>
         </Link>
       </div>
-      <div className="YOUR-DECK max-w-7xl">
-        <div className="TOTAL-STATS">
-          <h1 className="font-bold text-xl text-center">YOUR DECK</h1>
-          <h2>Your Deck Total Stats:</h2>
-          <p>Defense: {totalPokeDeckStats.defense}</p>
-          <p>Attack: {totalPokeDeckStats.attack}</p>
-          <p>HP: {totalPokeDeckStats.hp}</p>
-        </div>
-        <div className="DECK grid grid-cols-5 gap-5 p-2">
+      {/* player deck */}
+      <div className="YOUR-DECK  flex flex-col w-full place-items-center">
+        <div className="DECK grid grid-cols-5 gap-5 p-2 max-w-7xl">
           {pokeDeck.map((pokemon) => (
             <div
               key={pokemon.id}
@@ -86,21 +84,16 @@ const Arena = () => {
           ))}
         </div>
       </div>
-      <div className="FIGHT">
-        <div>
-          <button className="bg-red-500 p-2 rounded-md shadow-xl">
-            ATTACK
-          </button>
-        </div>
-      </div>
-      <div className="BOT-DECK max-w-7xl">
-        <div className="TOTAL-STATS">
-          <h1 className="font-bold text-xl text-center">BOT DECK</h1>
-          <h2>BOT Deck Total Stats:</h2>
-          <p>Defense: {totalBotDeckStats.defense}</p>
-          <p>Attack: {totalBotDeckStats.attack}</p>
-          <p>HP: {totalBotDeckStats.hp}</p>
-        </div>
+
+      <Fight
+        playerHealth={playerHealth}
+        botHealth={botHealth}
+        totalPokeDeckStats={totalPokeDeckStats}
+        totalBotDeckStats={totalBotDeckStats}
+      />
+
+      {/* bot deck */}
+      <div className="BOT-DECK flex flex-col w-full place-items-center">
         <div className="DECK grid grid-cols-5 gap-5 p-2">
           {botDeck.map((pokemon) => (
             <div
