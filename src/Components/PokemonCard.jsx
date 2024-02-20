@@ -19,8 +19,8 @@ const PokemonCard = () => {
 
   return (
     <>
-      <div className="APP w-full flex flex-col place-items-center">
-        <div className="CONTROLS w-full flex flex-row gap-2 place-content-center text-white text-lg mb-8">
+      <div className="POKEMONCARD w-full flex flex-col place-items-center">
+        <div className="POKEMONCARDCONTROLS w-full flex flex-row gap-1 place-content-center text-white text-lg mb-8">
           <button
             onClick={shufflePokemon}
             className="bg-red-500 p-2 rounded-md shadow-xl"
@@ -38,7 +38,7 @@ const PokemonCard = () => {
             </button>
           </Link>
         </div>
-        <div className="CARDS grid grid-cols-4 gap-5 p-2 max-w-7xl">
+        <div className="POKEMONCARDCARDS grid grid-cols-2 md:grid-cols-4 gap-5 p-2 max-w-7xl text-xs sm:text-base md:text-lg">
           {pokemon.map((pokemon, index) => (
             <div
               key={index}
@@ -49,9 +49,7 @@ const PokemonCard = () => {
               style={{ transition: "transform 0.3s ease" }}
             >
               <div className="flex flex-row justify-evenly w-full place-items-center">
-                <h2 className="text-xl font-bold">
-                  {pokemon.name.toUpperCase()}
-                </h2>
+                <h2 className=" font-bold">{pokemon.name.toUpperCase()}</h2>
                 <img
                   className="w-11"
                   src={getTypeIcon(pokemon.types)}
@@ -63,7 +61,7 @@ const PokemonCard = () => {
                 alt={pokemon.name}
                 className="w-full"
               />
-              <div className="statsDiv grid grid-cols-3 w-full place-items-center text-lg -mt-2 font-bold">
+              <div className="STATS grid grid-cols-3 w-full place-items-center -mt-2 font-bold">
                 <div>{pokemon.stats[2].stat.name}</div>
                 <div>{pokemon.stats[1].stat.name}</div>
                 <div>{pokemon.stats[0].stat.name}</div>
@@ -84,7 +82,7 @@ const PokemonCard = () => {
               <div className="mt-9">
                 <button
                   onClick={() => addToDeck(pokemon)}
-                  className="bg-black p-2 absolute bottom-0 right-0 left-0 mt-20 text-xl text-white font-bold"
+                  className="bg-black p-2 absolute bottom-0 right-0 left-0 mt-20 text-white font-bold"
                 >
                   Choose
                 </button>

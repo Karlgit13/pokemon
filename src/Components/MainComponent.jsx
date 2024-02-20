@@ -4,11 +4,11 @@ import PokeDeck from "./PokeDeck";
 
 const MainComponent = () => {
   return (
-    <div>
-      <div>
+    <div className="MAINCOMPONENT">
+      <div className="POKEDECK">
         <PokeDeck />
       </div>
-      <div>
+      <div className="POKEMONCARD">
         <PokemonCard />
       </div>
     </div>

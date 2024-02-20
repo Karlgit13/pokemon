@@ -29,14 +29,14 @@ export const PokemonProvider = ({ children }) => {
   };
 
   const addToDeck = (pokemon) => {
-    if (pokeDeck.length < 5) {
+    if (pokeDeck.length < 6) {
       setPokeDeck((currentDeck) => {
         return currentDeck.find((poke) => poke.id === pokemon.id)
           ? currentDeck
           : [...currentDeck, pokemon];
       });
     } else {
-      alert("You have already selected 5 pokemons!");
+      alert("You have already selected 6 pokemons!");
     }
   };
 
@@ -98,7 +98,7 @@ export const PokemonProvider = ({ children }) => {
   // effects
   useEffect(() => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=24")
+      .get("https://pokeapi.co/api/v2/pokemon?limit=100")
       .then((response) => {
         // hämta detaljer för varje pokemon
         return Promise.all(
@@ -119,7 +119,7 @@ export const PokemonProvider = ({ children }) => {
   useEffect(() => {
     const createBotDeck = () => {
       const shuffledPokemon = shuffleArray([...pokemon]);
-      const selectedForBot = shuffledPokemon.slice(0, 5);
+      const selectedForBot = shuffledPokemon.slice(0, 6);
       setBotDeck(selectedForBot);
     };
 

@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { usePokemon } from "./PokemonContext";
 import { Link } from "react-router-dom";
 import Fight from "./Fight";
 
 const Arena = () => {
   const { pokeDeck, botDeck, getTypeColor, getTypeIcon } = usePokemon();
-  const [playerHealth, setPlayerHealth] = useState(1500);
-  const [botHealth, setBotHealth] = useState(1500);
+  const [playerHealth, setPlayerHealth] = useState(500);
+  const [botHealth, setBotHealth] = useState(500);
 
   // pokeDeck stats
   const totalPokeDeckStats = useMemo(() => {
@@ -19,6 +19,10 @@ const Arena = () => {
     }, {});
   }, [pokeDeck]);
 
+  useEffect(() => {
+    setPlayerHealth(500 + (totalPokeDeckStats.hp || 0));
+  }, [totalPokeDeckStats.hp]);
+
   // BOTDeck stats
   const totalBotDeckStats = useMemo(() => {
     return botDeck.reduce((totals, pokemon) => {
@@ -29,9 +33,13 @@ const Arena = () => {
     }, {});
   }, [botDeck]);
 
+  useEffect(() => {
+    setBotHealth(500 + (totalBotDeckStats.hp || 0));
+  }, [totalBotDeckStats.hp]);
+
   return (
-    <div className="ARENA w-full flex flex-col place-items-left">
-      <div className="CONTROLS">
+    <div className="ARENA w-full flex flex-col place-items-left text-xs sm:text-base md:text-xl">
+      <div className="ARENA-CONTROLS">
         <Link to={"/main"}>
           <button className="bg-red-500 p-2 rounded-md shadow-xl">
             Back To Deck
@@ -39,8 +47,8 @@ const Arena = () => {
         </Link>
       </div>
       {/* player deck */}
-      <div className="YOUR-DECK  flex flex-col w-full place-items-center">
-        <div className="DECK grid grid-cols-5 gap-5 p-2 max-w-7xl">
+      <div className="PLAYER-DECK  flex flex-col w-full place-items-center">
+        <div className="DECK grid grid-cols-2 md:grid-cols-3 gap-5 p-2 max-w-7xl">
           {pokeDeck.map((pokemon) => (
             <div
               key={pokemon.id}
@@ -48,9 +56,7 @@ const Arena = () => {
             ${getTypeColor(pokemon.types)}`}
             >
               <div className="flex flex-row justify-evenly w-full place-items-center">
-                <h2 className="text-lg font-bold">
-                  {pokemon.name.toUpperCase()}
-                </h2>
+                <h2 className=" font-bold">{pokemon.name.toUpperCase()}</h2>
                 <img
                   className="w-11"
                   src={getTypeIcon(pokemon.types)}
@@ -62,7 +68,7 @@ const Arena = () => {
                 alt={pokemon.name}
                 className="w-full"
               />
-              <div className="statsDiv grid grid-cols-3 w-full place-items-center text-lg -mt-2 font-bold">
+              <div className="statsDiv grid grid-cols-3 w-full place-items-center -mt-2 font-bold">
                 <div>{pokemon.stats[2].stat.name}</div>
                 <div>{pokemon.stats[1].stat.name}</div>
                 <div>{pokemon.stats[0].stat.name}</div>
@@ -87,14 +93,16 @@ const Arena = () => {
 
       <Fight
         playerHealth={playerHealth}
+        setPlayerHealth={setPlayerHealth}
         botHealth={botHealth}
+        setBotHealth={setBotHealth}
         totalPokeDeckStats={totalPokeDeckStats}
         totalBotDeckStats={totalBotDeckStats}
       />
 
       {/* bot deck */}
       <div className="BOT-DECK flex flex-col w-full place-items-center">
-        <div className="DECK grid grid-cols-5 gap-5 p-2">
+        <div className="DECK grid grid-cols-2 md:grid-cols-3 gap-5 p-2">
           {botDeck.map((pokemon) => (
             <div
               key={pokemon.id}
@@ -102,9 +110,7 @@ const Arena = () => {
             ${getTypeColor(pokemon.types)}`}
             >
               <div className="flex flex-row justify-evenly w-full place-items-center">
-                <h2 className="text-lg font-bold">
-                  {pokemon.name.toUpperCase()}
-                </h2>
+                <h2 className=" font-bold">{pokemon.name.toUpperCase()}</h2>
                 <img
                   className="w-11"
                   src={getTypeIcon(pokemon.types)}
@@ -116,7 +122,7 @@ const Arena = () => {
                 alt={pokemon.name}
                 className="w-full"
               />
-              <div className="statsDiv grid grid-cols-3 w-full place-items-center text-lg -mt-2 font-bold">
+              <div className="statsDiv grid grid-cols-3 w-full place-items-center -mt-2 font-bold">
                 <div>{pokemon.stats[2].stat.name}</div>
                 <div>{pokemon.stats[1].stat.name}</div>
                 <div>{pokemon.stats[0].stat.name}</div>
