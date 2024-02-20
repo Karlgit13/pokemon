@@ -11,6 +11,7 @@ const PokemonCard = () => {
     handleCardClick,
     getTypeColor,
     getTypeIcon,
+    getRandomDeck,
   } = usePokemon();
 
   if (pokemon.length === 0) {
@@ -20,20 +21,26 @@ const PokemonCard = () => {
   return (
     <>
       <div className="POKEMONCARD w-full flex flex-col place-items-center">
-        <div className="POKEMONCARDCONTROLS w-full flex flex-row gap-1 place-content-center text-white text-lg mb-8">
+        <div className="POKEMONCARDCONTROLS w-full grid grid-cols-2 md:flex md:flex-row gap-1 place-content-center text-white text-lg mb-8">
           <button
             onClick={shufflePokemon}
             className="bg-red-500 p-2 rounded-md shadow-xl"
           >
             Shuffle Cards
           </button>
+          <button
+            onClick={getRandomDeck}
+            className="bg-red-500 p-2 rounded-md shadow-xl text-sm"
+          >
+            I dont wanna choose :(
+          </button>
           <Link to={"/arena"}>
-            <button className="bg-red-500 p-2 rounded-md shadow-xl">
+            <button className="bg-red-500 p-2 rounded-md shadow-xl w-full">
               Go To Arena
             </button>
           </Link>
           <Link to="/">
-            <button className="bg-red-500 p-2 rounded-md shadow-xl">
+            <button className="bg-red-500 p-2 rounded-md shadow-xl w-full">
               Back To Meny
             </button>
           </Link>

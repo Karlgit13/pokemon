@@ -14,6 +14,13 @@ export const PokemonProvider = ({ children }) => {
   const [activePokemon, setActivePokemon] = useState(null);
 
   // functions
+
+  const getRandomDeck = () => {
+    const shuffledArray = shuffleArray([...pokemon]);
+    const sixRandomPokes = shuffledArray.slice(0, 6);
+    setPokeDeck(sixRandomPokes);
+  };
+
   const handleCardClick = (index) => {
     setActivePokemon(index === activePokemon ? null : index);
   };
@@ -98,7 +105,7 @@ export const PokemonProvider = ({ children }) => {
   // effects
   useEffect(() => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=100")
+      .get("https://pokeapi.co/api/v2/pokemon?limit=150")
       .then((response) => {
         // hämta detaljer för varje pokemon
         return Promise.all(
@@ -142,6 +149,7 @@ export const PokemonProvider = ({ children }) => {
         handleCardClick,
         getTypeColor,
         getTypeIcon,
+        getRandomDeck,
       }}
     >
       {children}
