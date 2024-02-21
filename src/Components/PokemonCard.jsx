@@ -1,8 +1,10 @@
 import React from "react";
 import { usePokemon } from "./PokemonContext";
 import { Link } from "react-router-dom";
+import { useLoadAllPokemons } from "./LoadAllPokemons";
 
 const PokemonCard = () => {
+  const loadAllPokemons = useLoadAllPokemons();
   const {
     pokemon,
     addToDeck,
@@ -30,9 +32,9 @@ const PokemonCard = () => {
           </button>
           <button
             onClick={getRandomDeck}
-            className="bg-red-500 p-2 rounded-md shadow-xl text-sm"
+            className="bg-red-500 p-2 rounded-md shadow-xl"
           >
-            I dont wanna choose :(
+            I don't want to
           </button>
           <Link to={"/arena"}>
             <button className="bg-red-500 p-2 rounded-md shadow-xl w-full">
@@ -44,6 +46,12 @@ const PokemonCard = () => {
               Back To Meny
             </button>
           </Link>
+          <button
+            onClick={() => loadAllPokemons()}
+            className="bg-red-500 p-2 rounded-md shadow-xl w-full col-span-2"
+          >
+            Load all 1302 Pokemons
+          </button>
         </div>
         <div className="POKEMONCARDCARDS grid grid-cols-2 md:grid-cols-4 gap-5 p-2 max-w-7xl text-xs sm:text-base md:text-lg">
           {pokemon.map((pokemon, index) => (

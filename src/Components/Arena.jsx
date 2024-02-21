@@ -8,6 +8,16 @@ const Arena = () => {
   const [playerHealth, setPlayerHealth] = useState(500);
   const [botHealth, setBotHealth] = useState(500);
 
+  useEffect(() => {
+    const scrollToFightSection = () => {
+      const fightSection = document.querySelector(".FIGHT");
+      if (fightSection) {
+        fightSection.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+    scrollToFightSection();
+  }, []);
+
   // pokeDeck stats
   const totalPokeDeckStats = useMemo(() => {
     return pokeDeck.reduce((totals, pokemon) => {

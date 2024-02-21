@@ -118,7 +118,7 @@ export const PokemonProvider = ({ children }) => {
         // skapa detaljerad lista för varje pokemon
         const detailedPokemons = pokemonDetails.map((detail) => detail.data);
         setPokemon(detailedPokemons);
-        console.log(detailedPokemons);
+        console.log("Detailed pokemons:", detailedPokemons);
       })
       .catch((error) => console.error(("error: ", error)));
   }, []);
@@ -139,6 +139,7 @@ export const PokemonProvider = ({ children }) => {
     <PokemonContext.Provider
       value={{
         pokemon,
+        setPokemon,
         typeToColor,
         typeToPng,
         shufflePokemon,
