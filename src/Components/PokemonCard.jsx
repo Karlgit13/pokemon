@@ -23,7 +23,7 @@ const PokemonCard = () => {
   return (
     <>
       <div className="POKEMONCARD w-full flex flex-col place-items-center">
-        <div className="POKEMONCARDCONTROLS w-full grid grid-cols-2 md:flex md:flex-row gap-1 place-content-center text-white text-lg mb-8">
+        <div className="POKEMONCARDCONTROLS w-full grid grid-cols-2 max-w-xl gap-1 place-content-center text-white text-lg mb-8">
           <button
             onClick={shufflePokemon}
             className="bg-red-500 p-2 rounded-md shadow-xl"
@@ -52,8 +52,11 @@ const PokemonCard = () => {
           >
             Load all 1302 Pokemons
           </button>
+          <div className="text-black col-span-2 w-full text-center">
+            <h2>Currently showing </h2>
+          </div>
         </div>
-        <div className="POKEMONCARDCARDS grid grid-cols-2 md:grid-cols-4 gap-5 p-2 max-w-7xl text-xs sm:text-base md:text-lg">
+        <div className="POKEMONCARDCARDS grid grid-cols-2 md:grid-cols-4 gap-5 p-2 max-w-5xl w-full text-xs sm:text-base md:text-lg">
           {pokemon.map((pokemon, index) => (
             <div
               key={index}
