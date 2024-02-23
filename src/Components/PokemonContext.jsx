@@ -12,6 +12,7 @@ export const PokemonProvider = ({ children }) => {
   const [pokeDeck, setPokeDeck] = useState([]);
   const [botDeck, setBotDeck] = useState([]);
   const [activePokemon, setActivePokemon] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // functions
 
@@ -151,6 +152,8 @@ export const PokemonProvider = ({ children }) => {
         getTypeColor,
         getTypeIcon,
         getRandomDeck,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}

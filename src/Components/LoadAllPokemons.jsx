@@ -4,9 +4,10 @@ import { usePokemon } from "./PokemonContext";
 // custom hook
 
 export const useLoadAllPokemons = () => {
-  const { setPokemon } = usePokemon();
+  const { setPokemon, setIsLoading } = usePokemon();
 
   const loadAllPokemons = () => {
+    setIsLoading(true);
     axios
       .get("https://pokeapi.co/api/v2/pokemon?limit=1302")
       .then((response) => {
@@ -22,7 +23,8 @@ export const useLoadAllPokemons = () => {
         setPokemon(detailedPokemons);
         console.log("Detailed pokemons:", detailedPokemons);
       })
-      .catch((error) => console.error(("error: ", error)));
+      .catch((error) => console.error(("error: ", error)))
+      .finally((() => setIsLoading(false)))
   };
   return loadAllPokemons;
 };

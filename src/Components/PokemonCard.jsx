@@ -2,11 +2,13 @@ import React from "react";
 import { usePokemon } from "./PokemonContext";
 import { Link } from "react-router-dom";
 import { useLoadAllPokemons } from "./LoadAllPokemons";
+import Loading from "./Loading";
 
 const PokemonCard = () => {
   const loadAllPokemons = useLoadAllPokemons();
   const {
     pokemon,
+    pokeDeck,
     addToDeck,
     shufflePokemon,
     activePokemon,
@@ -14,36 +16,11 @@ const PokemonCard = () => {
     getTypeColor,
     getTypeIcon,
     getRandomDeck,
+    isLoading,
   } = usePokemon();
 
-  if (pokemon.length === 0) {
-    return (
-      <div className="flex w-screen h-screen justify-center place-items-center">
-        <div className="text-lg font-semibold text-gray-500 flex flex-row">
-          <svg
-            className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-          <div>Loading...</div>
-        </div>
-      </div>
-    );
+  if (pokemon.length === 0 || isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -62,11 +39,21 @@ const PokemonCard = () => {
           >
             I don't want to
           </button>
-          <Link to={"/arena"}>
+          {pokeDeck.length > 0 ? (
             <button className="bg-red-500 p-2 rounded-md shadow-xl w-full">
+              <Link to={"/arena"}> Go To Arena</Link>
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                alert("You must choose 6 pokemons or klick I don't want to.")
+              }
+              className="bg-red-500 p-2 rounded-md shadow-xl w-full"
+            >
               Go To Arena
             </button>
-          </Link>
+          )}
+
           <Link to="/">
             <button className="bg-red-500 p-2 rounded-md shadow-xl w-full">
               Back To Meny
@@ -76,10 +63,10 @@ const PokemonCard = () => {
             onClick={() => loadAllPokemons()}
             className="bg-red-500 p-2 rounded-md shadow-xl w-full col-span-2"
           >
-            Load all 1302 Pokemons
+            Load ALL Pokemons
           </button>
           <div className="text-black col-span-2 w-full text-center">
-            <h2>Currently showing </h2>
+            <h2>Currently showing {pokemon.length} of 1302 Pokemons</h2>
           </div>
         </div>
         <div className="POKEMONCARDCARDS grid grid-cols-2 md:grid-cols-4 gap-5 p-2 max-w-5xl w-full text-xs sm:text-base md:text-lg">
