@@ -17,7 +17,33 @@ const PokemonCard = () => {
   } = usePokemon();
 
   if (pokemon.length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex w-screen h-screen justify-center place-items-center">
+        <div className="text-lg font-semibold text-gray-500 flex flex-row">
+          <svg
+            className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          <div>Loading...</div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -62,7 +88,7 @@ const PokemonCard = () => {
               key={index}
               className={`flex flex-col place-items-center my-3 relative p-2 border border-black rounded-sm hover:scale-105 hover:shadow-2xl
             ${getTypeColor(pokemon.types)}
-            ${activePokemon === index ? "z-10 scale-105 shadow-lg" : ""}`}
+            ${activePokemon === index ? "z-10 scale-100 shadow-lg" : ""}`}
               onClick={() => handleCardClick(index)}
               style={{ transition: "transform 0.3s ease" }}
             >

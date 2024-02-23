@@ -105,7 +105,7 @@ export const PokemonProvider = ({ children }) => {
   // effects
   useEffect(() => {
     axios
-      .get("https://pokeapi.co/api/v2/pokemon?limit=150")
+      .get("https://pokeapi.co/api/v2/pokemon?limit=200")
       .then((response) => {
         // hämta detaljer för varje pokemon
         return Promise.all(
