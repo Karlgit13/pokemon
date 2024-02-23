@@ -48,7 +48,7 @@ const Arena = () => {
   }, [totalBotDeckStats.hp]);
 
   return (
-    <div className="ARENA w-full flex flex-col place-items-left text-xs sm:text-base md:text-xl">
+    <div className="ARENA w-full flex flex-col place-items-left ">
       <div className="ARENA-CONTROLS">
         <Link to={"/main"}>
           <button className="bg-red-500 p-2 rounded-md shadow-xl">
@@ -58,7 +58,7 @@ const Arena = () => {
       </div>
       {/* player deck */}
       <div className="PLAYER-DECK  flex flex-col w-full place-items-center">
-        <div className="DECK grid grid-cols-2 md:grid-cols-3 gap-5 p-2 max-w-7xl">
+        <div className="DECK grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 2xl:text-sm gap-5 p-2 max-w-7xl">
           {pokeDeck.map((pokemon) => (
             <div
               key={pokemon.id}
@@ -112,7 +112,7 @@ const Arena = () => {
 
       {/* bot deck */}
       <div className="BOT-DECK flex flex-col w-full place-items-center">
-        <div className="DECK grid grid-cols-2 md:grid-cols-3 gap-5 p-2">
+        <div className="DECK grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 2xl:text-sm gap-5 p-2">
           {botDeck.map((pokemon) => (
             <div
               key={pokemon.id}

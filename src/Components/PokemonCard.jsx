@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { usePokemon } from "./PokemonContext";
 import { Link } from "react-router-dom";
 import { useLoadAllPokemons } from "./LoadAllPokemons";
 import Loading from "./Loading";
 
 const PokemonCard = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredPokemon, setFilteredPokemon] = useState([]);
+
   const loadAllPokemons = useLoadAllPokemons();
   const {
     pokemon,
@@ -19,6 +22,24 @@ const PokemonCard = () => {
     isLoading,
   } = usePokemon();
 
+  const handleSearchTerm = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+
+    if (term.trim() !== "") {
+      const filteredResults = pokemon.filter((poke) =>
+        poke.name.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredPokemon(filteredResults);
+    } else {
+      setFilteredPokemon(pokemon);
+    }
+  };
+
+  useEffect(() => {
+    setFilteredPokemon(pokemon);
+  }, [pokemon]);
+
   if (pokemon.length === 0 || isLoading) {
     return <Loading />;
   }
@@ -31,13 +52,13 @@ const PokemonCard = () => {
             onClick={shufflePokemon}
             className="bg-red-500 p-2 rounded-md shadow-xl"
           >
-            Shuffle Cards
+            Shuffle cards
           </button>
           <button
             onClick={getRandomDeck}
             className="bg-red-500 p-2 rounded-md shadow-xl"
           >
-            I don't want to
+            Choose for me
           </button>
           {pokeDeck.length > 0 ? (
             <button className="bg-red-500 p-2 rounded-md shadow-xl w-full">
@@ -50,27 +71,36 @@ const PokemonCard = () => {
               }
               className="bg-red-500 p-2 rounded-md shadow-xl w-full"
             >
-              Go To Arena
+              Go to arena
             </button>
           )}
 
           <Link to="/">
             <button className="bg-red-500 p-2 rounded-md shadow-xl w-full">
-              Back To Meny
+              Back to meny
             </button>
           </Link>
           <button
             onClick={() => loadAllPokemons()}
             className="bg-red-500 p-2 rounded-md shadow-xl w-full col-span-2"
           >
-            Load ALL Pokemons
+            Load ALL pokemons
           </button>
+
+          <input
+            className="w-full col-span-2 p-2 border border-black rounded-md text-black"
+            type="text"
+            value={searchTerm}
+            onChange={handleSearchTerm}
+            placeholder="Search for Pokemons"
+          />
+
           <div className="text-black col-span-2 w-full text-center">
-            <h2>Currently showing {pokemon.length} of 1302 Pokemons</h2>
+            <h2>Currently showing {filteredPokemon.length} of 1302 Pokemons</h2>
           </div>
         </div>
-        <div className="POKEMONCARDCARDS grid grid-cols-2 md:grid-cols-4 gap-5 p-2 max-w-5xl w-full text-xs sm:text-base md:text-lg">
-          {pokemon.map((pokemon, index) => (
+        <div className="POKEMONCARDCARDS grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-6 2xl:text-sm gap-5 p-2 max-w-7xl w-full text-xs sm:text-base md:text-lg">
+          {filteredPokemon.map((pokemon, index) => (
             <div
               key={index}
               className={`flex flex-col place-items-center my-3 relative p-2 border border-black rounded-sm hover:scale-105 hover:shadow-2xl
