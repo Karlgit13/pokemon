@@ -9,6 +9,7 @@ const Fight = ({
   totalBotDeckStats,
 }) => {
   const [winner, setWinner] = useState(null);
+  const [damageReport, setDamageReport] = useState({ player: 0, bot: 0 });
 
   useEffect(() => {
     if (botHealth <= 0 || playerHealth <= 0) {
@@ -17,13 +18,18 @@ const Fight = ({
     }
   }, [playerHealth, botHealth]);
 
+  const randomBaseAttackValue = () => {
+    return Math.floor(Math.random() * (200 - 100 + 1)) + 100;
+  };
+
   const attack = () => {
     if (winner !== null) {
       return;
     }
 
-    const playerBaseAttackValue = 200;
-    const botBaseAttackValue = 200;
+    const playerBaseAttackValue = randomBaseAttackValue();
+    const botBaseAttackValue = randomBaseAttackValue();
+
     const playerAttackValue =
       playerBaseAttackValue + (totalPokeDeckStats.attack || 0);
     const playerDefense = totalPokeDeckStats.defense || 0;
@@ -36,6 +42,11 @@ const Fight = ({
 
     setPlayerHealth((prevHealth) => Math.max(prevHealth - damageToPlayer, 0));
     setBotHealth((prevHealth) => Math.max(prevHealth - damageToBot, 0));
+    setDamageReport((prevReport) => ({
+      ...prevReport,
+      player: damageToPlayer,
+      bot: damageToBot,
+    }));
   };
 
   return (
@@ -56,9 +67,20 @@ const Fight = ({
           >
             ATTACK
           </button>
+          {(damageReport.player || damageReport.bot) > 0 && (
+            <div className="report-div">
+              <p>Player took {damageReport.player} damage</p>
+              <p>Bot took {damageReport.bot} damage</p>
+            </div>
+          )}
           {winner && (
             <div className=" p-5 font-bold">
-              <h1>Congrats {winner} wins!</h1>
+              <h1>
+                {" "}
+                {winner === "Player"
+                  ? "Congrats Player Wins!"
+                  : "Too bad you suck"}
+              </h1>
             </div>
           )}
         </div>
